@@ -1,0 +1,28 @@
+class Solution:
+    def singleNumber(self, nums: List[int]) -> int:
+        
+        #異或運算，任何數與自己異或結果為0
+        #所以重複數字會抵消，只剩下出現一次的數字
+
+        result = 0  #定義一個變數
+
+        for num in nums:  #遍歷列表中的數字
+            result ^= num  #異或操作，使用位運算符時，Python會自動處理數字的位級操作，不需要手動轉換為二進制
+
+        return result  #回傳唯一的數字
+
+
+class Solution:
+    def singleNumber(self, nums: List[int]) -> int:
+
+        count = {}  #定義一個空字典
+
+        for num in nums:  #遍歷列表中的數字
+            if num in count:  #如果數字有在字典內
+                count[num] += 1  #次數加1
+            else:  #如果數字沒在字典內
+                count[num] = 1  #放入字典內
+
+        for num in count:  #遍歷字典的數字
+            if count[num] == 1:  #如果該數字的值等於1
+                return num  #回傳數字

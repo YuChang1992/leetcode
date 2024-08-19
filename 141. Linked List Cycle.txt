@@ -1,0 +1,19 @@
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution:
+    def hasCycle(self, head: Optional[ListNode]) -> bool:
+
+        #龜兔賽跑算法        
+        fast = head  #定義一個兔子
+        slow = head  #定義一個烏龜
+
+        while fast and fast.next  #當兔子自己或是下一步為空值停止
+            fast = fast.next.next  #兔子每次走兩步
+            slow = slow.next  #烏龜每次走一步
+            if fast == slow:  #如果兔子跟烏龜相遇
+                return True
+        return False

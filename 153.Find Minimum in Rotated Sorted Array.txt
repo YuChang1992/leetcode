@@ -1,0 +1,15 @@
+class Solution:
+    def findMin(self, nums: List[int]) -> int:
+
+        left = 0  #定義一個左點
+        right = len(nums) - 1  #定義一個右點
+
+ 	    while left < right:  #左點小於右點進入迴圈
+ 	        mid = left + (right - left) // 2  #右點減左點整除二取中點
+
+ 	        if nums[mid] > nums[right]:  #如果中點大於右點，代表最小值在右側
+  	            left = mid + 1  #更新左點位置到中點右邊一位
+  	        else:  #中點沒大於右邊，代表最小值是中點本身或在左側
+ 	            right = mid  #更新右點到終點的位置
+
+  	    return nums[left]

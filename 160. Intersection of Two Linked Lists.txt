@@ -1,0 +1,46 @@
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution:
+    def getIntersectionNode(self, headA: ListNode, headB: ListNode) -> Optional[ListNode]:
+        
+        if not headA or not headB:  #如果沒有A鍊表或是B鍊表
+            return None  #回傳None
+
+        #初始化兩個指針
+        pointerA = headA  #定義一個指針A指向A鍊表
+        pointerB = headB  #定義一個指針B指向B鍊表
+
+        while pointerA != pointerB:  #A指針不等於B指針，執行迴圈
+            pointerA = pointerA.next if pointerA else headB
+            #更新指針A，如果指針A不是None，指針A移動到下一個位置，如果是None，指針A指向到B鍊表
+            pointerB = pointerB.next if pointerB else headA
+            #更新指針B，如果指針B不是None，指針B移動到下一個位置，如果是None，指針B指向到A鍊表
+
+        return pointerA  #回傳相交的節點，沒有交點回傳None
+
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution:
+    def getIntersectionNode(self, headA: ListNode, headB: ListNode) -> Optional[ListNode]:
+
+        nodes = set()  #定義一個集合，以方便快速查找
+
+        while headA:  #鍊表A不是None時，執行迴圈
+            nodes.add(headA)  #將當前節點加入集合內
+            headA = headA.next  #移動到下一個節點
+
+        while headB:  #鍊表B不是None時，執行迴圈
+            if headB in nodes:  #如果當前節點有在集合內
+                return headB  #回傳當前節點
+            headB = headB.next  #移動到下一個節點
+
+        return None  #回傳None，沒有找到交點
