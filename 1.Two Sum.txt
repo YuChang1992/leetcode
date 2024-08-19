@@ -9,3 +9,15 @@ class Solution:
 #第一個數加第二個數看有沒有等於答案，沒有就第一個數加第三個數...
 #第二個數加第三個數，第二個數加第四個數...
 #以此類推直到等於答案，再回傳數值的位置
+
+
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+
+        lookup = {}  #定義一個空字典，key存放數字，value存放索引
+        for index, number in enumerate(nums):  #用enumerate函數遍歷nums列表，須給兩個值，index是索引，number是數值
+            if target - number in lookup:  #如果答案減當前迭代的數值，得到的差有在字典內
+                return [index, lookup[target - number]]
+				#回傳兩個數字的索引，index為當前遍歷到的，lookup[target-number]是之前存入
+            else:  #如果得到的差沒在字典內
+                lookup[number] = index  #將數值及索引存進字典

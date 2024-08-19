@@ -1,0 +1,16 @@
+class Solution:
+    def longestCommonPrefix(self, strs: List[str]) -> str:
+
+	pref = strs[0]  #先從列表中取出第一個字串，用來跟之後的字串比較
+	pref_len = len(pref)  #取得該字串長度
+
+	for s in strs[1:]:  #逐一迭代出列表第二到最後一個的字串
+		while pref != s[0:pref_len]:  #第一個字串不等於當前取出的字串，執行迴圈
+			pref_len -= 1  #縮短要匹配的字串長度
+
+			if pref_len == 0:  #如果長度減到0，表示沒匹配到
+				return ""  #回傳""
+
+			pref = pref[0:pref_len]  #更新第一個字串，保留跟前次匹配的長度，以比對下次的字串
+
+	return pref  #回傳公共前綴

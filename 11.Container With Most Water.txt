@@ -1,0 +1,21 @@
+class Solution:
+    def maxArea(self, height: List[int]) -> int:
+
+	left = 0  #定義一個左點
+	right = len(height) - 1  #定義一個右點
+	max_water = 0  #定義一個存放最多水的變數
+
+	while left < right:  #左點小於右點進入迴圈
+		water = min(height[left], height[right]) * (right - left)
+		#計算水的範圍，左點的高跟右點的高取最小邊，右點減左點算出間隔，兩者相乘
+
+		if water > max_water:  #如果算出來的水，比當前存放最多水的變數大
+			max_water = water  #將最多水的變數更新
+
+		if height[left] < height[right]:  #如果左點的高小於右點的高
+			left += 1  #左點向右移動
+		else:  #左點的邊高沒有小於右點的邊高
+			right -= 1  #右點像左移動
+	return max_water
+
+
