@@ -1,0 +1,16 @@
+class Solution:
+    def longestConsecutive(self, nums: List[int]) -> int:
+        
+        nums_set = set(nums)  #將nums轉換成set集合，不用像列表逐個遍歷查找速度較快，自動去除重複的元素
+        longest_consec = 0  #定義一個變數，存放找到的連續數字最長長度
+
+        for num in nums_set:  #遍歷集合中的每個數字
+            if num - 1 not in nums_set:  #如果遍歷的數字減1沒有在集合中，表示該數字為連續數字的起始
+                curr_consec = 1  #目前累積長度初始化為1
+                while num + curr_consec in nums_set:
+                #迴圈檢查遍歷的數字加目前累積長度有在集合內，代表數字有連續
+                    curr_consec += 1  #目前累積長度加1
+
+                longest_consec = max(curr_consec, longest_consec)  #更新存放的連續數字最長長度，跟目前累積長度比取較大的
+
+        return longest_consec  #回傳存放的連續數字最長長度

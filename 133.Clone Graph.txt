@@ -1,0 +1,32 @@
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val = 0, neighbors = None):
+        self.val = val
+        self.neighbors = neighbors if neighbors is not None else []
+"""
+
+from typing import Optional
+class Solution:
+    def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
+        
+        if not node:  #如果節點為空
+            return None  #返回空
+
+        visited = {}  #定義一個字典，存放已克隆的節點
+        queue = collections.deque([node])  #collections特別容器資料型態，deq類似列表，將起始節點放入
+        visited[node] = Node(node.val)  #克隆起始節點在字典中
+
+        #queue = collections.deque()
+        #queue.append(node)
+        #visited[node] = Node(node.val, [])
+
+        while queue:  #當列表不為空時，進行迴圈
+            visited_node = queue.popleft()  #從列表中取出當前節點
+            for neighbor in visited_node.neighbors:  #遍歷當前節點的每個鄰居
+                if neighbor not in visited:  #如果鄰居節點沒在字典內代表未被克隆過
+                    visited[neighbor] = Node(neighbor.val)  #克隆鄰居節點在字典中
+                    queue.append(neighbor)  #將鄰居節點加入列表，下次迴圈使用
+                visited[visited_node].neighbors.append(visited[neighbor])
+                #將克隆的鄰居加到當前克隆節點的鄰居列表
+        return visited[node]  #返回克隆的起始點

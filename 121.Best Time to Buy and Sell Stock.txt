@@ -1,0 +1,29 @@
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+
+        max_profit = float("-inf")  #定義max_profit為無限小，存放最大價差
+        min_price = float("inf")  #定義min_price為無限大，存放當前找到的最小值
+
+        for price in prices:  #將列表內的數字跌代出
+                min_price = min(min_price, price)
+                #比較min_price存取的值跟price，數值小的取代min_price
+                max_profit = max(max_profit, price - min_price)
+                #比較max_profit存取的值跟price-min_price，數值大的取代max_profit
+
+        return max_profit
+
+
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+
+        profit = 0  #定義一個變數，存放最大價差
+        buy = prices[0]  #定義一個當前購買價格，起始從列表的第0位
+
+        for sell in prices[1:]:  #遍歷列表中的價格，從第一位開始
+            if sell > buy:  #如果當前價格大於購買價格
+                profit = max(profit, sell - buy)
+                #更新最大價差，目前存放的最大價差跟(當前價格減購買價格)比取較大
+            else:  #如果當前價格小於購買價格
+                buy = sell  #更新購買價格到當前價格
+
+        return profit  #回傳最大價差

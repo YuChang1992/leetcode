@@ -1,0 +1,28 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def maxPathSum(self, root: Optional[TreeNode]) -> int:
+
+        #preorder: N,L,R
+        #inorder: L,N,R
+        #postorder: L,R,N
+
+            max_path_sum = float("-inf")  #定義一個紀錄最大路徑和的變數，起始為無限小
+
+            def post_order(node):  #自訂函式
+                nonlocal max_path_sum  #nonlocal可在遞歸函數中修改外部作用域中的max_path_sum
+                if not node:  #如果當前節點為空，代表最大路徑和為0
+                    return 0  #回傳0
+        
+                left = max(post_order(node.left), 0)  #使用後序遍歷，計算左子樹最大路徑和，用max遞規後的最大路徑和為負數，則取0
+                right = max(post_order(node.right), 0)  #使用後序遍歷，計算右子樹最大路徑和，用max遞規後的最大路徑和為負數，則取0
+                curr_max = node.val + left + right  #計算當前節點作為根節點與左右子樹相加的最大路徑和
+                max_path_sum = max(max_path_sum, curr_max)  #紀錄的最大路徑和跟當前節點取得的最大路徑和比較取較大的
+                return node.val + max(left, right)  #回傳當前根節點與左子節點或右子節點相加最大那邊的路徑和
+        
+            post_order(root)  #調用函式，將root傳遞給它
+            return max_path_sum  #返回紀錄的最大路徑和
