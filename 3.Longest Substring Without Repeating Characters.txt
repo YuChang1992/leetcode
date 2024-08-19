@@ -1,18 +1,18 @@
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
     
-	start = 0  #定義一個窗口的起始
-	longest_substring_size = 0  #定義一個存放累積最長字串長度的變數
-	lookup = {}  #定義一個字典，存放字符與最近一次出現的索引
+		start = 0  #定義一個窗口的起始
+		longest_substring_size = 0  #定義一個存放累積最長字串長度的變數
+		lookup = {}  #定義一個字典，存放字符與最近一次出現的索引
 
-	for end in range(len(s)):  #end窗口的結束，遍歷輸入字符串s的索引
-		if s[end] in lookup and lookup[s[end]] > start:
-		#如果當前字符有在字典內，且窗口的尾巴大於窗口的起始
-			start = lookup[s[end]]  #將窗戶的起始位置變到尾巴的位置
+		for end in range(len(s)):  #end窗口的結束，遍歷輸入字符串s的索引
+			if s[end] in lookup and lookup[s[end]] > start:
+			#如果當前字符有在字典內，且窗口的尾巴大於窗口的起始
+				start = lookup[s[end]]  #將窗戶的起始位置變到尾巴的位置
 
-		lookup[s[end]] = end + 1  #將目前字符最後一次出現的位置更新，因為位置從0開始所以要加1
+			lookup[s[end]] = end + 1  #將目前字符最後一次出現的位置更新，因為位置從0開始所以要加1
 
-		longest_substring_size = max(longest_substring_size, end - start +1)
-		#累積最長字串長度跟(當前窗戶尾巴減當前窗戶起始加1)做比較，較大的更新為新的累積最長字串長度
+			longest_substring_size = max(longest_substring_size, end - start +1)
+			#累積最長字串長度跟(當前窗戶尾巴減當前窗戶起始加1)做比較，較大的更新為新的累積最長字串長度
 
-	return longest_substring_size
+		return longest_substring_size

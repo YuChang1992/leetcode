@@ -1,28 +1,28 @@
 class Solution:
     def longestPalindrome(self, s: str) -> str:
         
-	def expand(l, r):  #自訂函式，取得左索引跟右索引
-		while (l >= 0 and r < len(s) and s[l] == s[r]):
-		#左索引小於等於0且右索引小於字串長度且左字元等於右字元
-			l -= 1  #左索引向左移一位
-			r += 1  #右索引向右移一位
-		return s[l+1 : r]  #回傳左索引加1到右索引(不含右索引)區間的切片字串
+		def expand(l, r):  #自訂函式，取得左索引跟右索引
+			while (l >= 0 and r < len(s) and s[l] == s[r]):
+			#左索引小於等於0且右索引小於字串長度且左字元等於右字元
+				l -= 1  #左索引向左移一位
+				r += 1  #右索引向右移一位
+			return s[l+1 : r]  #回傳左索引加1到右索引(不含右索引)區間的切片字串
 
-	result = ""  #定義一個變數，存放最終答案
-	for i in range(len(s)):  #從第0位開始遍歷整個字串
+		result = ""  #定義一個變數，存放最終答案
+		for i in range(len(s)):  #從第0位開始遍歷整個字串
 
-		#先用字串長度為單數的方式檢查
-		sub1 = expand(i,i)  #呼叫函式，傳入i兩次為左索引跟右索引
-		#更新sub1為函式回傳的切片字元
+			#先用字串長度為單數的方式檢查
+			sub1 = expand(i,i)  #呼叫函式，傳入i兩次為左索引跟右索引
+			#更新sub1為函式回傳的切片字元
 
-		if len(sub1) > len(result):  #如果切片字串的長度大於存放在最終答案字串的長度
-			result = sub1  #更新最終答案為切片字串
+			if len(sub1) > len(result):  #如果切片字串的長度大於存放在最終答案字串的長度
+				result = sub1  #更新最終答案為切片字串
 
-		#再用字串長度為雙數的方式檢查
-		sub2 = expand(i, i+1)  #再次呼叫函式，傳入i及i+1為左索引跟右索引
-		更新sub2為函式回傳的切片字元
+			#再用字串長度為雙數的方式檢查
+			sub2 = expand(i, i+1)  #再次呼叫函式，傳入i及i+1為左索引跟右索引
+			更新sub2為函式回傳的切片字元
 
-		if len(sub2) > len(result):  #如果切片字串的長度大於存放在最終答案字串的長度
-			result = sub2  更新最終答案為切片字串
+			if len(sub2) > len(result):  #如果切片字串的長度大於存放在最終答案字串的長度
+				result = sub2  更新最終答案為切片字串
 
-		return result  #回傳最終答案
+			return result  #回傳最終答案

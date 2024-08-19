@@ -1,0 +1,15 @@
+class Solution:
+    def isValid(self, s: str) -> bool:
+
+        lookup = {"(":")","[":"]","{":"}"}
+	    #定義一個字典，裡面存放 key是(、[、{ ，value是)、]、}
+        stack = []  #定義一個列表存放取出的值
+
+        for char in s:  #迭代出s字串中的字符
+            if char in lookup:  #如果取出的值有在字典內
+                stack.append(char)  #將取出的值放入列表
+            elif not stack or char != lookup[stack.pop()]:
+	        #如果列表中沒有東西 或 取出的值不等於字典中用列表取出的值當key找到的value
+                return False  #回傳False
+                
+        return len(stack) == 0  #列表內的值全部取出代表配對成功

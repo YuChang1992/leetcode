@@ -1,0 +1,37 @@
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+
+            nums.sort()  #先由小到大排序
+            result = []  #定義一個列表，存放找到的答案
+
+            #避免重複計算相同數
+            for i in range(len(nums) - 2):  #i只到倒數第三位數，後面兩位分別為左點及右點
+                if i > 0 and nums[i] == nums[i - 1]:  #如果i是大於0，且當前位置的數與前一個數相同
+                    continue  #跳過
+                
+                left = i + 1  #定義出左點，從i的右邊一位開始
+                right = len(nums) - 1  #定義出右點，從最後一位開始
+
+                while left < right:  #左點小於右點，執行迴圈
+                    total = nums[i] + nums[left] + nums[right]  #三個數相加
+
+                    if total == 0:  #如果相加後等於0
+                        result.append([nums[i],nums[left],nums[right]])  #回傳陣列型態到存放答案的列表
+
+                        while left < right and nums[left] == nums[left + 1]:
+			            #左點小於右點且左點的數跟左點下一個數相同
+                            left += 1  #跳下一個位置，避免重複計算相同的數
+
+                        while left < right and nums[right] == nums[right - 1]:
+			            #左點小於右點且右點的數跟右點下一個數相同
+                            right -= 1    #跳下一個位置，避免重複計算相同的數
+                        
+                        left += 1  #左點正常移位
+                        right -= 1  #右點正常移位
+                    
+                    elif total <0:  #如果加總小於0
+                        left += 1  #代表左點的數要變大，往右移
+                    else:  #如果相加後大於0
+                        right -= 1  #代表右點的數要變小，往左移
+
+            return result  #回傳列表

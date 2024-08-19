@@ -1,0 +1,52 @@
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        
+        dummy_node = ListNode(0)  #定義一個虛擬節點
+        dummy_node.next = head  #將虛擬節點的設置為head表頭
+        length = 0  #定義一個存放長度的變數
+
+        while head:  #將head逐一遍歷
+            length += 1  #長度加1
+            head = head.next  #head移到下一個位置
+
+        length -= n  #總長度減n就能找到要刪除的節點
+
+        head = dummy_node  #將head移回dummy_naode，從表尾移回表頭為了下次重新遍歷
+
+        for i in range(length):  #遍歷範圍到要刪除的節點前
+            head = head.next  #head移到下一個位置
+
+        head.next = head.next.next  #跳過要刪除的節點到下一個
+
+        return dummy_node.next
+
+
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+
+        dummy_node = ListNode(0)  #定義一個虛擬節點
+        dummy_node.next = head  #將虛擬節點的設置為head表頭
+        slow = dummy_node  #定義兩個指針，起始從虛擬節點，用於尋找要移除的節點
+        fast = dummy_node
+
+        for _ in range(n):  #遍歷n的次數
+            fast = fast.next  #先移動fast，讓他比slow多n位
+
+        while fast.next:  #fast的下一位不是空值時，執行迴圈
+            slow = slow.next  #slow移到下一個位置
+            fast = fast.next  #fast移到下一個位置
+
+        slow.next = slow.next.next  #跳過要刪除的節點到下一個
+
+        return dummy_node.next
