@@ -1,0 +1,17 @@
+class Solution:
+    def merge(self, intervals: List[List[int]]) -> List[List[int]]:
+
+        result = []  #定義一個空列表存放找到的區間
+        intervals.sort(key=lambda interval:interval[0])
+        # sort直接在原本的列表根據指定條件元素排序
+        # lambda函數作為key參數，排序標準並不是對象本身的屬性，而是經過轉換後的結果，定義這種轉換，無需額外定義一個函數
+        # 取開始的數由小到大排序
+    
+        for interval in intervals:
+            if not result or interval[0] > result[-1][1]:
+            #如果result裡面沒東西或當前interval的起始數大於result裡目前存放最後一個區間的結尾數
+                result.append(interval)  #將當前interval直接加入result末尾
+            else:  #如果沒滿足上面條件
+                result[-1][1] = max(result[-1][1], interval[1])
+                #更新result的結尾數，用result目前存放最後一個區間的結尾數跟當前interval的結尾數做比較取較大的
+        return result  #回傳列表

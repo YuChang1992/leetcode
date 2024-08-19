@@ -1,0 +1,28 @@
+class Solution:
+    def search(self, nums: List[int], target: int) -> int:
+
+        left = 0  #左點起始在第0的位置
+        right  = len(nums) - 1  #右點起始在最後的位置
+
+        while left <= right:
+            mid = (left + right) // 2  #左點跟右點相加除2找出中點
+
+            if nums[mid] == target:  #如果中點等於要尋找的值
+                return mid
+
+            if nums[left] < nums[mid]:  #如果左點小於中點，代表左半部有排序
+                if nums[left] == target:  #如果左點等於要尋找的值
+                    return left
+                elif nums[left] < target < nums[mid]:  #如果要尋找的值是在左點跟中點之間
+                    right = mid - 1  #右點位置更新到中點的左邊一位
+                else:
+                    left = mid + 1  #左點位置更新到中點的右邊一位
+
+            else:  #如果右半部有排序
+                if nums[right] == target:  #如果右點等於要尋找的值
+                    return high
+                elif nums[mid] < target < nums[right]:  #如果要尋找的值是在右點跟中點之間
+                    left = mid + 1  #左點位置更新到中點的右邊一位
+                else:
+                    right = mid - 1  #右點位置更新到中點的左邊一位
+        return -1  #沒有在裡面回傳-1

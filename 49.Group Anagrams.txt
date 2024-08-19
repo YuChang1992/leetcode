@@ -1,0 +1,15 @@
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+
+        lookup = collections.defaultdict(list)  #定義一個字典，key是存放排序好的字，value是存放list型態
+
+        for word in strs :  #把字串從strs跌代出
+            sorted_word = "".join(sorted(word))
+            #sorted將字串變成字符排序["a","e","t"]
+            #join將將一個一個字符合併成字符串，中間用無分隔"aet"
+
+            lookup[sorted_word].append(word)
+            #將排序好的字符串作為key，並將原本的字串放入value
+            #如果字符串在字典中，直接加入新字串，如果不在字典中，會先建立一個新的
+
+        return lookup.values()  #回傳字典的values

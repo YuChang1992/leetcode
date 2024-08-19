@@ -1,0 +1,11 @@
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+
+        max_sum = float("-inf")  #定義一個max_sum為無限小，存放最大加總
+        curr_sum = 0  #定義一個變數，累積的值
+
+        for num in nums:  #迭代出列表中的數字
+            curr_sum += num  #累積的值加當前的值
+            curr_sum = max(curr_sum, num)  #更新累積的值，比較累積的值跟當前的值取較大
+            max_sum = max(max_sum, curr_sum)  #更新最大加總，比較最大加總跟累積的值取較大
+        return max_sum  #回傳最大加總

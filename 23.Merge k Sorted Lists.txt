@@ -1,0 +1,33 @@
+#import heapq  #引用全部模組
+from heapq import heapify, heappop, heappush  #引用部分模組
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
+        
+        min_heap = []  #定義一個存放最小節點的列表
+
+        for idx, linked_list in enumerate(lists):  #遍歷lists中每個列表跟索引值
+            if linked_list:  #如果遍歷出的列表內有東西
+                min_heap.append((linked_list.val, idx))
+                #將列表內節點的值，跟列表對應的索引值加入最小節點列表
+
+        heapify(min_heap)  #排序由小到大
+        head = ListNode(None)  #創一個空的ListNode，放入從最小節點列表取出的值
+        dummy = head  #最後回傳用的頭節點，在head的起始位置
+
+        while min_heap:  #最小節點列表內還有東西執行迴圈
+            val, idx = heappop(min_heap)  #每次取出最小節點的值跟索引
+            head.next = ListNode(val)  #將取出的值放入head下一個節點
+            head = head.next  #再把head移到下一個節點
+            lists[idx] = lists[idx].next  #將lists中對應索引的列表，移到下一個節點
+
+            if lists[idx]:  #如果lists中對應索引的列表中有東西
+                heappush(min_heap, (lists[idx].val, idx))
+                #將該節點的值跟對應的索引值加入最小節點列表
+
+        return dummy.next  #回傳頭節點

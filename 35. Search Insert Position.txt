@@ -1,0 +1,17 @@
+class Solution:
+    def searchInsert(self, nums: List[int], target: int) -> int:
+        
+        left = 0  #定義一個左點
+        right = len(nums) - 1  #定義一個右點
+
+        while left <= right:  #左點小於等於右點，執行迴圈
+            mid = (left + right) //2  #左點加右點除2取得中間點
+
+            if nums[mid] == target:  #如果列表中間的值等於要插入的數字
+                return mid  #回傳中間點
+            elif nums[mid] > target:  #如果列表中間的值大於要插入的數字
+                right = mid - 1  #移動右點的位置到中間點左邊一位
+            else:  #如果列表中間的值小於要插入的數字
+                left = mid + 1  #移動左點的位置到中間點右邊一位
+
+        return left  #當左點超過右點時，左點會是要插入的位置，返回左點
