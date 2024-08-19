@@ -1,0 +1,53 @@
+class TrieNode:
+	def __init__(self):
+		self.children = {}  #儲存子節點的字典
+		self.is_word = False  #標記是否為詞的結尾
+#用於定義Trie中的節點，每個節點包含一個children字典，用於儲存子傑點和is_word屬性
+
+class Trie:
+
+    def __init__(self):
+	
+	    self.trie_root = TrieNode()  #初始化Trie的根節點
+        
+
+    def insert(self, word: str) -> None:
+
+        curr = self.trie_root
+        
+        for char in word:  #遍歷每個字符
+            if char not in curr.children:  #如果沒有該字符的子節點
+                curr.children[char] = TrieNode()  #創建新節點
+            curr = curr.children[char]  #移動到下個節點
+        curr.is_word = True  #最後節點標記為詞的結尾
+        
+
+    def search(self, word: str) -> bool:
+
+        curr = self.trie_root
+
+        for char in word:  #遍歷每個字符
+            if char not in curr.children:  #如果字符沒有在子節點內
+                return False  #回傳False
+            curr = curr.children[char]  #移動到下個節點
+        return curr.is_word  #回傳最後節點的屬性，表示是否找到完整的詞，有為True，沒為False
+        
+
+    def startsWith(self, prefix: str) -> bool:
+
+        curr = self.trie_root
+
+        for char in prefix:  #遍歷每個字符
+            if char not in curr.children:  #如果字符沒有在子節點內，則前綴不存在
+                return False  #回傳False
+            curr = curr.children[char]  #移動到下個節點
+        return True  #遍歷完前綴所有字符，返回 True，表示找到了以該前綴開頭的詞
+		
+        
+
+
+# Your Trie object will be instantiated and called as such:
+# obj = Trie()
+# obj.insert(word)
+# param_2 = obj.search(word)
+# param_3 = obj.startsWith(prefix)

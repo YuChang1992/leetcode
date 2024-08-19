@@ -1,0 +1,32 @@
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+	def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+
+		prev = None
+
+		while head:
+			next_node = head.next  #將head的下一個數字保存在next_node中
+			head.next = prev  #將head的next指針指向它的前一個prev
+			prev = head  #將prev移動到下一個位置，原本head的位置，下一次迴圈使用
+			head = next_node  #將head移動到下一個位置，下一次迴圈使用
+		return prev
+
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+	def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+
+        if not head or not head.next:  #如果head為空值或沒下一個值，則返回鏈表
+            return head
+        reverse_head = self.reverseList(head.next)  #遞歸調用，將下一個head.next作為參數傳遞給reverseList，以反轉剩餘鏈表
+        head.next.next = head  #當到達最後一位數時，即找到新的鏈表起點(原始鏈表的結尾)，反轉鏈表
+        hesd.next = None  #為了保證反轉後的鏈表，要把原本指向結尾的指針消除
+        return reverse_head

@@ -1,0 +1,41 @@
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+
+        #Boyer-Moore 投票算法
+            
+        candidate = None  #定義一個變數，儲存候選元素
+        count = 0  #定義一個變數，計數器用來計算候選元素的支持數量
+
+        for num in nums:  #遍歷列表中每一個元素
+            if count == 0:  #如果計數器等於0
+                candidate = num  #更新當前的候選元素為當前元素
+
+            if num == candidate:  #如果當前元素等於當前的候選元素
+                count += 1  #次數加1
+            else:  #如果元素不同
+                count -= 1  #次數減1
+
+        if nums.count(candidate) > len(nums) // 2:  #如果列表中該候選元素的數量大於列表長度整除2
+            return candidate  #回傳該數字
+        else:  #如果沒有大於
+            return None  #回傳None
+
+
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+
+        count = {}  #定義一個字典，存放每個元素及出現次數
+
+        for num in nums:  #遍歷列表中每個元素
+            if num in count:  #如果元素有在字典內
+                count[num] += 1  #該元素次數加1
+            else:  #如果沒在字典內
+                count[num] = 1  #該元素次數等於1
+
+        majority_count = len(nums) // 2  #定義一個變數，找出列表長度的一半，方便後續使用
+
+        for num, cnt in count.items():  #遍歷字典中所有的鍵跟值
+            if cnt > majority_count:  #如果當前元素的值大於列表長度的一半
+                return num  #回傳該元素
+
+        return None  #回傳None

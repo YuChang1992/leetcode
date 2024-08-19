@@ -1,0 +1,32 @@
+class Solution:
+    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+        #numCourses課程數量
+        #prerequisites先修課程列表
+
+            lookup = collections.defaultdict(list)
+        #collections特別容器資料型態，defaultdict類似字典，當值不存在時提供預設值空列表
+
+        for course, pre in prerequisites:  #遍歷先修課程列表
+            lookup[course].append(pre)  #添加進字典，key為課程，value為先修課程
+
+        seen = set()  #建立一個集合，存放課程
+
+        def dfs(course):  #自訂遞歸函式
+            if course in seen:  #如果課程在集合中，代表存在循環
+                return False  #回傳False
+            if lookup[course] == []:  #如果當前課程沒有先修課程，代表可以完成
+                return True  #回傳True
+
+            seen.add(course)  #將當前課程加入集合
+
+            for pre in lookup[course]:  #遍歷當前課程的所有先修課程
+                if dfs(pre) == False:  #對每個先修課程調用函式，如果任何先修課程的調用回傳False
+                    return False  #立刻回傳False
+            seen.remove(course)  #從集合中移除當前課程
+            lookup[course] = []  #將字典中當前課程的先修課程列表清空，代表課程已經處理過
+            return True  #回傳True
+
+        for course in range(numCourses):  #遍歷每門課程
+            if dfs(course) == False:  #對每個課程調用函式，如果有課程的調用回傳False
+                return False  #立刻回傳False
+        return True
