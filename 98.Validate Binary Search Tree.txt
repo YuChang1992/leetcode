@@ -1,0 +1,58 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def isValidBST(self, root: Optional[TreeNode]) -> bool:
+        
+        #recursive
+
+        def is_valid(node, smallest, biggest):  #自訂函式
+            if not node:  #如果節點是空的
+                return True  #回傳True，空值為有效BST
+
+            if node.val <= smallest or node.val >= biggest:
+            #如果當前節點小於等於存放的最小值，或當前節點大於等於存放的最大值
+                return False  #回傳False
+
+            return is_valid(node.left, smallest, node.val) and is_valid(node.right, node.val, biggest)
+            #node.left(當前節點)、smallest(最小值)和node.val(最大值，左子樹右界)傳遞給is_valid函數，遞迴檢查左子樹
+            #node.right(當前節點)、node.val(最小值，右子樹左界)和biggest(最大值)傳遞給is_valid函數，遞迴檢查右子樹
+            
+        return is_valid(root, float("-inf"), float("inf"))
+        #root為根節點，最小值設為無限小，最大值設為無限大
+
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def isValidBST(self, root: Optional[TreeNode]) -> bool:
+
+        #iterative
+
+        if not root:  #如果根節點是空的
+            return True  #回傳True，空值為有效BST
+
+        stack = [(root, float("-inf"), float("inf"))]
+        #定義一個堆疊用的變數，將三個值放入，root為根節點，最小值設為無限小，最大值設為無限大
+
+        while stack:  #當堆疊內有東西時進行跌代
+            node, smallest, biggest = stack.pop()  #從堆疊中取出
+
+            if not node:  #如果節點是空的
+                continue  #跳過當前跌代，繼續處理堆疊中下一個節點
+
+            if node.val <= smallest or node.val >= biggest:
+            #如果當前節點小於等於存放的最小值，或當前節點大於等於存放的最大值
+                return False  #回傳False
+
+            #節點在範圍內，將其左右子節點及最大最小值放入堆疊中
+            stack.append((node.left, smallest, node.val))  #左子節點的值要小於當前節點的值
+            stack.append((node.right, node.val, biggest))  #右子節點的值要大於當前節點的值
+        return True  #迭代完所有節點都符合，回傳True

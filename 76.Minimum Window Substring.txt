@@ -1,0 +1,31 @@
+class Solution:
+    def minWindow(self, s: str, t: str) -> str:
+        
+        lookup = collections.Counter(t)  #定義一個字典，存放t要找的字，key為字母，value為字母的次數
+        match = 0  #定義一個變數，用來追蹤是否滿足字母的次數
+        start = 0  #定義一個變數，紀錄當前窗口的起始
+        min_window_substring = ""  #定義一個變數，用來存放找到最小窗口的字串
+        min_window_size = float("inf")  #定義一個變數，用來存放最小窗口的字串長度，起始為無限大
+
+        for end in range(len(s)):  #變歷字串s，end為窗口的結尾
+            if s[end] in lookup:  #如果當前窗口結尾的字母有在字典內
+                lookup[s[end]] -= 1  #字典內該字母次數減1
+                if lookup[s[end]] == 0:  #如果字典的次數減1
+                    match += 1  #滿足字母的次數加1
+
+            while match == len(lookup) and start < end +1:
+            #滿足字母的次數等於字典內存放字母的總次數且窗口的起始小於結尾(加1為了確保兩個重疊還有效)
+                curr_win_size = end - start + 1  #計算當前窗口的字串長度
+
+                if curr_win_size < min_window_size:  #如果當前窗口字串長度小於存放的最小窗口字串長度
+                    min_window_size = curr_win_size  #更新存放的最小窗口字串長度
+                    min_window_substring = s[start: end + 1]  #更新最小窗口的字串
+
+                if s[start] in lookup:  #如果當前窗口起始的字母有在字典內
+                    if lookup[s[start]] == 0:  #如果該字母
+                        match -= 1  #滿足字母的次數減1
+                    lookup[s[start]] += 1  #恢復字典內該字母次數加1
+
+                start += 1  #窗口的起始向右移，縮小窗口
+
+        return min_window_substring if min_window_substring else ""  #回傳找到最小窗口的字串，沒有則回傳空字符串

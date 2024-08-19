@@ -1,0 +1,20 @@
+class Solution:
+    def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
+        
+        result = []  #定義一個空列表，存放最後所有區間的結果
+        i = 0  #定義一個變數，用來遍歷原始區間列表intervals，起始為0
+
+        while i < len(intervals):  #i小於原始區間列表的長度，執行迴圈
+            if newInterval[0] > intervals[i][1]:  #如果新區間起始大於當前區間的結束，代表在當前區間後面
+                result.append(intervals[i])  #直接將當前區間加入存放的列表
+            elif newInterval[1] < intervals[i][0]:  #如果新區間結束小於當前區間的起始，代表在當前區間前面
+                result.append(newInterval)  #直接將新區間加入存放的列表
+                return result + intervals[i:]  #加入剩餘區間並返回結果
+            else:  #沒有在前面兩個條件中，代表有重疊
+                newInterval = [min(intervals[i][0], newInterval[0]), max(intervals[i][1], newInterval[1])]
+                #更新新的區間，當前區間的起始跟新區間的起始比取較小，當前區間的結束跟新區間的結束比取較大
+            
+            i += 1  #換遍歷下一個原始區間列表
+
+        result.append(newInterval)  #如果新區間在最後，將新區間加入存放的列表
+        return result  #回傳存放的列表

@@ -1,0 +1,46 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        
+        res = []  #定義一個空列表，存放中序遍歷的結果
+
+        def inorder(root):  #自訂函式
+            if not root:  #如果當前節點是空
+                return  #直接回傳
+
+            inorder(root.left)  #調用函式，遞歸遍歷左子樹
+            res.append(root.val)  #將當前節點的值添加到結果列表
+            inorder(root.right)  #調用函式，遞歸遍歷右子樹
+
+        inorder(root)  #調用函式，從根節點開始
+
+        return res  #回傳結果列表
+
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+
+        res = []  #定義一個列表，存放中序遍歷的結果
+        stack = []  #定義一個列表，暫存節點
+
+        while root or stack:  #當root或暫存列表不為空值，執行迴圈
+            while root:
+                stack.append(root)  #將當前節點新增到暫存列表
+                root = root.left  #將root移動到左子節點，過程重複到root為None(達到最左邊的節點)
+
+            root = stack.pop()  #從暫存列表中取出節點
+            res.append(root.val)  #將取出節點的值添加到結果列表中
+            root = root.right  #將root移動到右子節點
+
+        return res  #回傳結果列表

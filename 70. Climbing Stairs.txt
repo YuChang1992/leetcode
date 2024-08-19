@@ -1,0 +1,14 @@
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        
+        prev = 0  #定義前一個數
+        current = 1  #定義當前的數起始從1開始
+
+        for i in range(n):
+            prev, current = current, current + prev
+            #前一個數變成當前的數，當前的數加前一個數變成下一個數
+
+        return current
+
+#fibonacci費波那契數 1、2、3、5、8...
+#當前的數 + 前一個數 = 下一個數
