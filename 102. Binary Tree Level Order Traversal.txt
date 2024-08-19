@@ -1,0 +1,32 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+        
+        if not root:  #如果根節點為空的
+            return []  #回傳空列表
+
+        queue = collections.deque()  #定義一個雙向佇列
+        queue.append(root)  #將根節點加入佇列
+        result = []  #定義一個用於儲存每層節點值的結果列表
+
+        while queue:  #當佇列不是空的時候執行
+            curr_queue_size = len(queue)  #獲取當前該層的節點數量
+            curr_level_list = []  #初始化為空列表，用來存放當前該層的節點值列表
+
+            for _ in range (curr_queue_size):  #迴圈處理當前該層的節點
+                curr_node = queue.popleft()  #從佇列中取出一個節點
+                curr_level_list.append(curr_node.val)  #將取出節點的值加入當前該層的節點值列表
+
+                if curr_node.left:  #如果節點有左子節點
+                    queue.append(curr_node.left)  #將左子節點加入佇列
+                if curr_node.right:  #如果節點有右子節點
+                    queue.append(curr_node.right)  #將右子節點加入佇列
+
+            result.append(curr_level_list)  #將當前該層的節點值列表加入結果列表
+
+        return result

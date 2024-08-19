@@ -1,0 +1,34 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
+        
+        #preorder: N,L,R
+        #inorder: L,N,R
+        #postorder: L,R,N
+
+        preorder_queue = collections.deque(preorder)
+        #collections創建特別容器資料型態的函式，deque類似列表的物件，可快數在頭尾加入或取出元素
+        preorder_len = len(preorder) - 1  #定義根節點的遞歸邊界
+        lookup_inorder = {}  #定義一個空字典
+
+        for idx, value in enumerate(inorder):  #enumerate將inorder組合為索引序列，列出元素和索引值
+            lookup_inorder[value] = idx  #將迭代出的值放入字典
+
+        def build_tree(left, right):  #自訂函式，建構整棵樹，給兩個值左邊界與右邊界
+            if left > right:  #如果左邊界大於右邊界，表示當前子樹範圍無效，代表空節點
+                return None  #回傳None
+            else:  #如果範圍有效
+                root_value = preorder_queue.popleft()  #從preorder中取出頭部元素
+                root = TreeNode(root_value)  #創建當前子樹的根節點
+
+                mid = lookup_inorder[root_value]  #從之前創建的字典中找到根節點的索引，分割左右子樹
+                #build_tree遞歸建構左子樹和右子樹
+                root.left = build_tree(left, mid - 1)  #左子樹的範圍是從left到mid減1
+                root.right = build_tree(mid + 1, right)  #右子樹的範圍是從mid加1到right
+                return root
+        return build_tree(0, preorder_len)  #調用函式

@@ -1,0 +1,24 @@
+# Definition for a binary tree node.
+# class TreeNode:  #定義TreeNode類別
+#     def __init__(self, val=0, left=None, right=None):  #初始化類別
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def isSymmetric(self, root: Optional[TreeNode]) -> bool:
+        
+        if not root:  #如果根結點是空的
+            return True  #回傳True
+
+        def dfs(left: TreeNode, right: TreeNode) -> bool:  #自訂函式，接受兩個參數，它們是TreeNode類別，->bool是一種函數註解，可寫可不寫
+            if not left and not right:  #如果沒有左節點且沒有右節點
+                return True  #回傳True
+
+            if not left or not right:  #如果沒有左節點或沒有右節點
+                return False  #回傳False
+
+            return(left.val == right.val and  #如果兩個節點的值相同且
+                dfs(left.left, right.right) and  #左子樹的左子樹和右子樹的右子樹對稱且
+                dfs(left.right, right.left))  #左子樹的右子樹和右子樹的左子樹對稱
+
+        return dfs(root.left, root.right)  #調用函式，從根結點開始檢查

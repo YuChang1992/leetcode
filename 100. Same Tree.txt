@@ -1,0 +1,48 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
+        
+        #Recursion
+        if not p and not q:  #如果兩個樹都是空的，代表相同
+            return True  #回傳True
+        elif not p or not q:  #如果其中一個樹是空的，另一個不是，代表不同
+            return False  #回傳False
+        elif p.val != q.val:  #如果節點的值不同，代表不同
+            return Fasle  #回傳False
+
+        return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
+        #遞迴比較左子樹且右子樹是否相同
+
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
+
+        #BFS
+        queue = collections.deque()  #定義一個雙向佇列
+        queue.append((p,q))  #將兩個樹的節點p,q加入，迭代比較
+
+        while queue:  #queue裡有東西的話執行迴圈
+            p_node, q_node = queue.popleft()  #每次從佇列中取出一對p,q的節點
+
+            if not p_node and not q_node:  #如果兩個樹的節點都沒東西，代表相同
+                continue  #跳過這輪繼續下一輪，不是遞歸不能直接回傳True
+            elif not p_node or not q_node:  #如果只有其中一個樹的節點沒東西，代表不同
+                return False  #回傳False
+            elif p_node.val != q_node.val:  #如果兩棵樹節點的值不相同
+                return False  #回傳False
+
+            queue.append((p_node.left, q_node.left))  #將左子樹和右子樹的節點分別加入佇列中，進行下一輪比較
+            queue.append((p_node.right, q_node.right))
+
+        return True  #所有節點都比較完畢且沒回傳False，代表兩個樹相同，回傳True

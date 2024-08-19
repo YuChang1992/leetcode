@@ -1,0 +1,27 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def maxDepth(self, root: Optional[TreeNode]) -> int:
+        
+        #BFS
+        if not root:  #如果根節點為空的
+            return 0  #回傳深度為0
+
+        queue = collections.deque()  #定義一個雙向佇列
+        queue.append((root, 1))  #將根節點與起始層數加入佇列
+        max_level = 0  #定義一個存放最大層數的變數
+
+        while queue:  #當佇列不是空的時候執行
+            node, level = queue.popleft()  #從佇列中取出，node為當前節點，level為該節點層數
+            max_level = max(max_level, level)  #更新最大層數，比較存放最大層數與當前節點的層數取較大
+
+            if node.left:  #如果當前節點有左子節點
+                queue.append((node.left, level + 1))  #將左子節點與層數加1，加入佇列進行下一輪迭代
+            if node.right:  #如果當前節點有右子節點
+                queue.append((node.right, level + 1))  #將右子節點與層數加1，加入佇列進行下一輪迭代
+
+        return max_level  #回傳最大層數
