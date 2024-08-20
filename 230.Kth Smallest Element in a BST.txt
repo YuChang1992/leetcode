@@ -1,0 +1,27 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
+        
+		#BST左小右大，使用Inorder可以由小到大排序
+
+		stack = []  #定義一個空列表，存放節點數字
+		stack.append(root)  #先將根節點放入
+
+		while stack:  #只要列表中有值，執行迴圈
+			while root:  #當前節點不是空值時，執行迴圈
+				stack.append(root)  #將當前節點放入列表
+				root = root.left  #當前節點移到下個左子節點位置
+			#遇到空值時跳出迴圈
+
+			node = stack.pop()  #從列表取出最後放入的數字
+			k -= 1  #k減1
+
+			if k == 0:  #如果k等於0
+				return node.val  #回傳當前取出的數字
+
+			root = node.right  #左邊沒找到，當前節點移到下個右子節點位置

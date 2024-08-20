@@ -1,0 +1,22 @@
+class Solution:
+    def countSubstrings(self, s: str) -> int:
+
+		count = 0  #定義一個計算數量的變數
+		#palindroms = []  ##如果要顯示每種組合方法，定義一個列表
+
+		def palindrom_count(left, right, s):  #自訂一個函式，會有左邊跟右邊還有輸入的s字串
+			nonlocal count  #使內部函數可以修改外部函數的count變數
+			while left >= 0 and right < len(s) and s[left] == s[right]:
+			#當左右指針沒有越界且左右的字符相等執行循環
+				count += 1  #每當找到一種排列時，計數器加1
+				#palindroms.append(s[left:right + 1])
+				##把找出的組合加入列表中，從最左到最右的值，不含最後一位所以要加1
+				left -= 1  #左指針向左移動，繼續判斷下一個字符是否相等
+				right += 1  #右指針向右移動，繼續判斷下一個字符是否相等
+
+		for i in range(len(s)):  #遍歷字串s中每個字符
+			palindrom_count(i, i, s)  #調用上面的函式，單個字符s[i]為中心向左右判斷
+			palindrom_count(i, i + 1, s)  #調用上面的函式，以相鄰兩個字符s[i]和s[i+1]為中心向左右判斷
+
+		#print(palindroms)  ##輸出列表
+		return count

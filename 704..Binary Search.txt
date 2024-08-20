@@ -1,0 +1,17 @@
+class Solution:
+    def search(self, nums: List[int], target: int) -> int:
+        
+		left = 0  #定義一個左點，起始從0開始
+		right = len(nums) - 1  #定義一個右點，在列表最右邊，起始從0開始所以減1
+
+		while left <= right:  #左點小於等於右點執行迴圈
+			mid = (left + right) // 2  #定義一個中點，位置是左點加右點除2
+
+			if nums[mid] == target:  #如果中點的數字等於要找的數字
+				return mid  #回傳中點位置
+			elif nums[mid] < target:  #如果中點的數字小於要找的數字
+				left = mid + 1  #更新左點位置到中點的右邊一位
+			else  #如果中點的數字大於要找的數字
+				right = mid - 1  #更新右點位置到中點的左邊一位
+
+		return -1  #回傳-1，如果沒找到數字

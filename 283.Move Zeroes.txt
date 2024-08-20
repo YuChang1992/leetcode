@@ -1,0 +1,17 @@
+class Solution:
+    def moveZeroes(self, nums: List[int]) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        
+		left = 0  #定義一個左點
+		right = 0  #定義一個右點
+
+		while right < len(nums):  #右點小於列表的長度執行迴圈
+			if nums[right] != 0:  #如果右點位置的數字不等於0
+				nums[left], nums[right] = nums[right], nums[left]  #左點跟右點位置的數字互換
+				left += 1  #左點右移
+
+			right += 1  #右點右移
+
+		return nums  #回傳改變後的列表

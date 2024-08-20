@@ -1,0 +1,40 @@
+class WordDictionary:
+
+    def __init__(self):
+
+		self.word_dict = collections.defaultdict(set)
+		#定義一個特別容器資料型態，類似字典，keu依據單字長度分類，value存放集合
+			
+	def addWord(self, word: str) -> None:
+
+		self.word_dict[len(word)].add(word)  #根據單字的長度，加入對應的集合裡
+		
+	def search(self, search_word: str) -> bool:
+
+		if "." not in search_word:  #如果要配對的單字裡沒有"."
+			if search_word not in self.word_dict[len(search_word)]:  #透過長度索引如果要配對的單字沒有在集合內
+				return False  #回傳False
+			else:  #有在集合內
+				return True  #回傳True
+
+		#如果單字裡有"."
+		for word in self.word_dict[len(search_word)]:  #遍歷集合內長度符合的所有單字
+
+			matched = True  #假設單字全都可以配對成功，預設為True
+
+			for idx, search_char in enumerate(search_word):  #遍歷要配對的單字每個索引值跟對應字母
+				if word[idx] != search_char and search_char != ".":
+				#透過索引值比對當前位置，如果取出的單字字母不等於要配對的單字字母
+				#且要配對的單字字母當前位置不是"."
+					matched = False  #改為False沒有配對成功
+					break
+			if matched:  #如果配對成功
+				return True  #回傳True
+		return False  #遍歷儲存的所有單字，沒有找到配對的，回傳False
+        
+
+
+# Your WordDictionary object will be instantiated and called as such:
+# obj = WordDictionary()
+# obj.addWord(word)
+# param_2 = obj.search(word)

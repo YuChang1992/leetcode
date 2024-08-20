@@ -1,0 +1,30 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
+       
+		def is_same_tree(tree1,tree2):  #跟100題Same Tree很像
+			if not tree1 and not tree2:  #如果沒有樹1且沒有樹2，代表相同
+				return True  #回傳True
+			elif not tree1 or not tree2:  #如果其中一邊沒有樹，另一邊有，代表不同
+				return False  #回傳False
+			elif tree1.val != tree2.val:  #如果節點的值不同，代表不同
+				return False  #回傳False
+
+			return is_same_tree(tree1.left, tree2.left) and is_same_tree(tree1.right, tree2.right)
+			#遞迴比較左子樹且右子樹是否相同
+
+		if not root and not subRoot:  #如果沒有root且沒有subRoot
+			return True  #回傳True
+		elif root and not subRoot:  #如果有root且沒有subRoot
+			return True  #回傳True
+		elif not root and subRoot:  #如果沒有root且有subRoot
+			return False  #回傳False
+		return is_same_tree(root, subRoot) or self.isSubtree(root.left, subRoot) or self.isSubtree(root.right, subRoot)
+		#調用is_same_tree函式比較subRoot是否和root相同
+		#或遞迴比較subRoot是否和root左子樹相同
+		#或遞迴比較subRoot是否和root右子樹相同

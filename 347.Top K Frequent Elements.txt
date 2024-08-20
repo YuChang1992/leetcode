@@ -1,0 +1,11 @@
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        
+		freq = Counter(nums)  #counter為collections的特別容器資料型態，類似字典，用於計算各元素的數量
+
+		sorted_freq = sorted(freq.items(), key=lambda x: x[1], reverse=True)
+		#sorted排序，排序條件以字典的Value，reverse升序或降序
+
+		top_k = [sorted_freq[i][0] for i in range(k)]
+		#取出字典中的key，迭代範圍從0到k-1，代表只取前k個元素
+		return top_k

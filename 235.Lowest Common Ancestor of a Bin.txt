@@ -1,0 +1,17 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        
+		if p.val < root.val and q.val < root.val:
+		#如果p的值小於根節點的值且q的值小於根節點的值，代表在根節點左側
+			return self.lowestCommonAncestor(root.left, p, q)  #遞歸調用左子樹
+		elif p.val > root.val and q.val > root.val:
+		#如果p的值大於根節點的值且q的值大於根節點的值，代表在根節點右側
+			return self.lowestCommonAncestor(root.right, p, q)  #遞歸調用右子樹
+		return root  #如果上面兩個條件都不符合，代表當前節點就是要找的位置

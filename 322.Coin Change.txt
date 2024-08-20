@@ -1,0 +1,17 @@
+class Solution:
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        
+		dp = [0] + ([float("inf")] * amount)   # [0, inf, inf, inf ...]
+		#定義一個只有唯一元素0的陣列，跟一個長度為amount，內容為無限大的陣列連接一起
+
+		for i in range(1, amount + 1):  #起始從第一位開始迭代，到amount加1的位置(因為陣列前面多了一個0)
+			for coin in coins:  #從硬幣堆取出不同硬幣
+				if coin <= i:  #如果硬幣小於等於當前索引值
+					dp[i] = min(dp[i], dp[i - coin] + 1)
+					#更新列表[當前所引的值]，列表[當前索引的值](無限大)
+					#跟列表[當前索引減硬幣]的索引值加1的值取較小
+
+		if dp[-1] == float("inf"):  #如果列表最後一位等於無限大
+			return -1  #回傳-1
+
+		return dp[-1]  #回傳列表最後一位的值

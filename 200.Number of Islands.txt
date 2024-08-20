@@ -1,0 +1,30 @@
+#GPT解法
+class Solution:
+    def numIslands(self, grid: List[List[str]]) -> int:
+        
+        if not grid:  #如果grid裡面是空的
+            return 0  #回傳0座島嶼
+
+        num_rows = len(grid)  #定義一個行數
+        num_cols = len(grid[0])  #定義一個列數
+        num_islands = 0  #定義一個存放島嶼數量的變數
+
+        def dfs(row, col):  #自訂一個函式，row和col兩個參數，代表grid中當前探索的位置行跟列
+            if row < 0 or col < 0 or row >= num_rows or col >= num_cols or grid[row][col] == '0':
+	        #如果row或col小於0，表示超出上邊界或左邊界
+	        #如果row大於等於num_rows或col大於等於num_cols，表示超出下邊界或右邊界
+	        #如果grid[row][col]等於"0"，表示該位置是水域或已經訪問過
+                return
+
+            grid[row][col] = '0'  #將探索過的位置轉換為0
+            dfs(row+1, col)  #行增加，向下探索
+            dfs(row-1, col)  #行減少，向上探索
+            dfs(row, col+1)  #列增加，向右探索
+            dfs(row, col-1)  #列減少，向左探索
+
+        for i in range(num_rows):  #雙重迴圈，遍歷grid的行
+            for j in range(num_cols):  #遍歷grid的列
+                if grid[i][j] == '1':  #如果為"1"代表發現新的島嶼
+                    num_islands += 1  #增加島嶼的數量
+                    dfs(i, j)  #調用上面的dfs函式來標記島嶼範圍
+        return num_islands

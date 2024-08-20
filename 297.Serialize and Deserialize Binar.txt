@@ -1,0 +1,57 @@
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Codec:
+
+    def serialize(self, root):
+        """Encodes a tree to a single string.
+        
+        :type root: TreeNode
+        :rtype: str
+        """
+
+        result = []  #定義一個空列表
+
+		def preorder(node):  #自訂函式
+			if not node:  #如果節點為空
+				result.append("None")  #將None字串加入列表
+				return
+			result.append(str(node.val))  #將節點的值轉換為str字串加入列表
+			preorder(node.left)  #遞歸調用處理左子樹
+			preorder(node.right)  #遞歸調用處理右子樹
+
+		preorder(root)  #調用函式，從根節點開始進行前序遍歷
+		return " ".join(result)  #將列表中的所有元素連接成一個字符串，join用空白做分割
+
+
+    def deserialize(self, data):
+        """Decodes your encoded data to tree.
+        
+        :type data: str
+        :rtype: TreeNode
+        """
+
+        data_list = data.split(" ")  #將字符串使用空格拆分成列表
+		queue = collections.deque(data_list)  #使用collections建立特別容器資料型態，deque類似列表，可快速從頭尾加入或取出元素
+
+		def deserialize_helper(queue):  #自訂函式
+			node = queue.popleft()  #從列表的左邊取出元素
+			if node == "None":  #如果元素為None，代表為空節點
+				return
+
+			root = TreeNode(node)  #建立一個新的TreeNode(題目要求)，節點的值為取出的元素
+			root.left = deserialize_helper(queue)  #遞歸調用函式，將返回值設置為左子樹
+			root.right = deserialize_helper(queue)  #遞歸調用函式，將返回值設置為右子樹
+			return root
+
+		return deserialize_helper(queue)
+
+
+# Your Codec object will be instantiated and called as such:
+# ser = Codec()
+# deser = Codec()
+# ans = deser.deserialize(ser.serialize(root))

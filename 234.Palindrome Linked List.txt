@@ -1,0 +1,25 @@
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def isPalindrome(self, head: Optional[ListNode]) -> bool:
+        
+		values = []  #定義一個空列表，存放所有節點
+
+		current = head  #定義一個指針，指向鍊表的頭節點
+		while current:  #指針指向的鍊表內還有節點，執行迴圈
+			values.append(current.val)  #當前指針指向節點的值加入列表
+			current = current.next  #指針移到下個位置
+
+		left = 0  #定義一個左點
+		right = len(values) - 1  #定義一個右點
+		while left < right:  #左點小於右點執行迴圈
+			if values[left] != values[right]:  #如果列表中左點的值不等於右點的值
+				return False  #回傳False
+			left += 1  #左點向右移一位
+			right -= 1  #右點像左移一位
+				
+
+		return True  #回傳True

@@ -1,0 +1,16 @@
+class Solution:
+    def eraseOverlapIntervals(self, intervals: List[List[int]]) -> int:
+
+        intervals.sort(key = lambda x:x[1])
+        #對列表進行排序，排序依據為每個子列表的第二個元素(結尾)
+        remove = 0  #定義一個存放答案的變數
+        end = intervals[0][0]  #定義結束時間的變數，起始值從第一個子列表的第一個元素
+
+        for interval in intervals:  #把每個interval取出做遍歷
+            start = interval[0]  #定義開始時間的變數，起始值為每個遍歷的子節點第一個元素
+        
+            if start < end:  #如果開始的時間小於之前存放的結束時間，代表時間重疊
+                remove += 1  #答案加1
+            else:  #時間沒有重疊
+                end = interval[1]  #更新結束的時間
+        return remove  #回傳答案

@@ -1,0 +1,41 @@
+class Solution:
+    def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:
+        
+		pacific_visited = set()  #定義兩個空的集合，用來儲存訪問過的座標
+		atlantic_visited = set()
+		rows = len(heights)  #定義一個行(橫)
+		cols = len(heights[0])  #定義一個列(直)
+
+		def dfs(r, c, visited, prev_height):
+		#自訂一個函式，接受當前位置的行、列，訪問過的集合visited，及前一個位置的高度prev_height
+			if((r, c) in visited or r < 0 or r == rows or c < 0 or c == cols or heights[r][c] < prev_height):
+			#如果(r,c)當前位置已存在訪問過的集合中
+			#或行索引r在矩陣範圍上方或下方，超出範圍
+			#或列索引c在矩陣範圍左方或右方，超出範圍
+			#或當前位置的高度小於前位置的高度，代表水無法到當前位置(由外向內找，水從低往高處流)
+				return
+
+			visited.add((r, c))  #將訪問過的座標加入
+			dfs(r - 1, c, visited, heights[r][c])  #呼叫函式，行索引減一，向上方探索
+			dfs(r + 1, c, visited, heights[r][c])  #呼叫函式，行索引加一，向下方探索
+			dfs(r, c - 1, visited, heights[r][c])  #呼叫函式，列索引減一，向左方探索
+			dfs(r, c + 1, visited, heights[r][c])  #呼叫函式，列索引加一，向右方探索
+
+		for col in range(cols):  #遍歷矩陣的每一列
+			#pacific從左側太平洋邊界
+			dfs(0, col, pacific_visited, heights[0][col])
+			#呼叫函式，從每一列的第一行(索引0)的位置進行搜索
+			#atlatntic從右側大西洋邊界
+			dfs(rows - 1, col, atlantic_visited, heights[rows -1][rol])
+			#呼叫函式，從每一列的最後一行(rows-1)的位置進行搜索
+
+		for row in range(rows):  #遍歷矩陣的每一行
+			#paficic top to down從上方太平洋邊界
+			dfs(row, 0, pacific_visited, heights[row][0])
+			#呼叫函式，從每一行的第一列(索引0)的位置進行搜索
+			#atlatic top to down從下方大西洋邊界
+			dfs(row, cols - 1, atlantic_visited, heights[row][cols - 1])
+			#呼叫函式，從每一行的最後一列(cols-1)的位置進行搜索
+
+		return list(pacific_visited.intersection(atlantic_visited))
+		#intersection用來找出兩個集合中共有的元素(交集)，然後轉換成列表回傳

@@ -1,0 +1,43 @@
+class Solution:
+    def findWords(self, board: List[List[str]], words: List[str]) -> List[str]:
+
+		def dfs(row, col, trie_root):  #自訂函式
+			char = board[row][col]  #取得字符矩陣目前位置的字符
+			curr = trie_root[char]  #從字典中取得當前字符的節點
+			word = curr.pop("FOUND", False)  #檢查是否有FOUND標記，有的話移除標記返回單字，沒有則返回False
+			if word:  #如果是完整單字
+				result.append(word)  #添加找到的單字到列表中
+			board[row][col] = "SEEN"  #將字符矩陣目前位置標記為SEEN，表示已訪問過，避免重複訪問
+			directions = [(row - 1, col),(row + 1, col),(row, col - 1),(row, col + 1)]
+			#定義四個方向移動，上、下、左、右
+			for r, c in directions:
+				if 0 <= r < rows and 0 <= c < cols and board[r][c] in curr:
+				#如果上下左右都在有效範圍內且當前位置的字符有在當前節點裡
+					dfs(r, c, curr)  #遞迴調用函式，繼續擴展搜索
+
+			board[row][col] = char  #結束當前搜索，恢復原來的字符，以便後續搜索
+
+			if not curr:  #如果當前節點沒有其他子節點
+				trie_root.pop(char)  #從trie移除這個節點，保留有效路徑，減少不必要節點，提高效率
+		
+		trie = {}  #定義一個字典
+		
+		for word in words:  #從words列表中遍歷每個單字
+			curr = trie  #設置為trie的根節點
+			for char in word:  #從每個單字遍歷每個字符
+				curr = curr.setdefault(char, {})
+				#檢查當前curr中是否有char對應的字符
+				#如果存在將curr更新為char這個字符的子節點上
+				#如果不存在將char作為curr的新子節點添加，設置為空的字典
+			curr["FOUND"] = word  #最後一個字符的節點添加標記，表示找到完整單詞
+
+		rows = len(board)  #字符矩陣的行
+		cols = len(board[0])  #字符矩陣的列
+		result = []  #定義一個空列表，存放找到的單字
+
+		#對字符矩陣中的位置搜索
+		for i in range(rows):
+			for j in range(cols):
+				if board[i][j] in trie:  #如果字符矩陣該位置的字符，存在於trie
+					dfs(i, j, trie)  #調用函式
+		return result  #回傳找到的單字

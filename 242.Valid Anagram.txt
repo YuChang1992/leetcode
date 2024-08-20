@@ -1,0 +1,41 @@
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+
+        if len(s) != len(t):  #如果兩個字的長度不同
+            return False  #回傳False
+
+        s_count = collections.Counter(s)  #collections創建特別容器資料型態，可用來替代一般內建的容器
+        t_count = collections.Counter(t)  #Counter字典的子類別，統計元素的出現次數，key是字符，value是次數
+
+        for key, value in s_count.items():  #使用items迭代出s字典內所有的字符跟次數
+            if key in t_count:  #如果取出的字符有在t字典內
+                if value != t_count[key]:  #如果取出的次數不相等t字典內的次數
+                    return False  #回傳False
+            else:  #如果沒在t字典內
+                return False  #回傳False
+        return True  #回傳True
+
+
+
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+
+        if len(s) != len(t):  #如果兩個字的長度不同
+            return False  #回傳False
+
+        char_count = {}  #定義一個空字典，用來計算每個字符的次數
+
+        for char in s:  #迭代出s字串的字符
+            if char in char_count:  #如果字符在字典內
+                char_count[char] += 1  #字符的次數加1
+            else:  #如果字符不在字典內
+                char_count[char] = 1  #放入字符，字符次數等於1
+
+        for char in t:  #迭代出t字串的字符
+            if char in char_count:  #如果字符在字典內
+                char_count[char] -= 1  #字符的次數減1
+                if char_count[char] < 0:  #如果字典內的字符次數小於0，代表不同
+                    return False  #回傳False
+            else:  #如果字符不在字典內
+                return False  #回傳False
+        return True  #回傳True

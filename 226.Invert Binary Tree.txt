@@ -1,0 +1,52 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+        
+		#BFS廣度優先搜索
+		if not root:  #如果根節點為空，直接回傳
+			return
+
+		queue = collections.deque()  #定義一個用來暫存待處理的節點
+		queue.append(root)  #將節點加入
+
+		while queue:  #當隊列不為空值時，進入迴圈
+			node = queue.popleft()  #從左側(頭)開始取出節點
+			node.left, node.right = node.right, node.left  #交換當前節點的左右子樹，反轉操作
+
+			if node.left:  #如果當前左子樹有東西
+				queue.append(node.left)  #將左子樹加入隊列中
+			if node.right:  #如果當前右子樹有東西
+				queue.append(node.right)  #將右子樹加入隊列中
+
+		return root
+
+
+
+
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+
+		#DFS深度優先搜索
+		#Pre_order:node, left, right
+		if not root:  #如果根節點為空，直接回傳
+			return
+
+		root.left, root.right = root.right, root.left  #交換當前節點的左右子樹，反轉操作
+
+		#invertTree將每個節點的左右子樹交換，從而得到原二叉樹的鏡像
+		self.invertTree(root.left)  #遞歸調用invertTree，對當前節點的左子樹進行反轉
+		self.invertTree(root.right)  #遞歸調用invertTree，對當前節點的右子樹進行反轉
+
+		return root

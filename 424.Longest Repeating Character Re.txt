@@ -1,0 +1,18 @@
+class Solution:
+    def characterReplacement(self, s: str, k: int) -> int:
+	#s表示輸入字符串，k表示最大替換次數
+        
+		lookup = {}  #定義一個字典，存放字母跟出現次數
+		start = 0  #定義一個窗口的起始
+
+		for end in range(len(s)):  #end窗口的結束，遍歷輸入字符串s的索引
+			lookup[s[end]] = lookup.get(s[end],0) + 1
+			#更新字典，，如果取出的字符不在字典內出現次數0+1，如果在字典內現有的出現次數+1
+			length = end - start + 1  #計算窗口的長度，尾巴減開頭+1
+
+			if length - max (lookup.values()) > k:
+			#檢查窗口內的字符數目是否大於允許替換的次數k，窗口的長度減掉最大出現次數
+				lookup[s[start]] -= 1
+				#如果窗口內的字符數目大於k，則縮小窗口，如果當時位置在A，則A的次數減1，同理B也是
+				start += 1  #窗口向右移動
+		return end - start + 1  #回傳最長子串的長度
